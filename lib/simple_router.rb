@@ -72,6 +72,10 @@ class SimpleRouter < Trema::Controller
       actions: SendOutPort.new(in_port))
 
       puts "  send out #{in_port}"
+      puts "    dst: #{arp_request.source_mac}"
+      puts "    src: #{arp_request.mac_address}"
+      puts "    spa: #{arp_request.target_protocol_address}"
+      puts "    tpa: #{arp_request.sender_protocol_address}"
   end
   # rubocop:enable MethodLength
 
