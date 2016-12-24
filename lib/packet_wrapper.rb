@@ -66,7 +66,6 @@ class PacketWrapper
       @dest_ip_address   = packet_in.data.target_protocol_address
     elsif @packet_class == Arp::Reply
       @source_mac_address = packet_in.data.source_mac
-      @dest_mac_address = packet_in.data.dest_mac
       @source_ip_address = packet_in.data.sender_protocol_address
       @dest_ip_address   = packet_in.data.target_protocol_address
     end
