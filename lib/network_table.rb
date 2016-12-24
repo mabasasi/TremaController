@@ -7,7 +7,7 @@ class NetworkTable
 
   include Pio
 
-  
+
   class NetworkEntity
     attr_reader :ip_address    #IPAddr     端末のIPアドレス＋ネットマスク
     attr_reader :mac_address   #PIO::MAC   端末のMACアドレス
@@ -20,6 +20,7 @@ class NetworkTable
     attr_reader :traffic_ssize  #int        通信量
 
     def initialize(in_port, ip_address, mac_address)
+      @ip_address = ip_address
       @mac_address = mac_address
       @exist_port  = in_port
       @masq_port   = -1
