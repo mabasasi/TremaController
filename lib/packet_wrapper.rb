@@ -18,7 +18,7 @@ class PacketWrapper
 
 
     # ARPブロック
-    puts "spa -> #{packet_in.data.sender_protocol_address}" if defined? packet_in.data.sender_protocol_address
+    puts "spa -> #{packet_in.data.target_protocol_address}" if defined? packet_in.data.target_protocol_address
 
     # IPブロック
     if defined? data.ip_protocol
