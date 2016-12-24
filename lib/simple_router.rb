@@ -34,7 +34,7 @@ class SimpleRouter < Trema::Controller
 
     case packet_in.data
     when Arp::Request
-      puts "ar #{packet_in.data}"
+      puts "ar #{packet_in.data.class_variables}"
       packet_in_arp_request dpid, packet_in.in_port, packet_in.data
     when Arp::Reply
       packet_in_arp_reply dpid, packet_in
