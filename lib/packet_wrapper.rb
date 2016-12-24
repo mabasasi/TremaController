@@ -18,7 +18,7 @@ class PacketWrapper
 
 
     # ARPブロック
-    @source_mac_address = data.sender_protocol_address if defined? data.sender_protocol_address
+    @source_mac_address = packet_in.data.sender_protocol_address if defined? data.sender_protocol_address
 
     # IPブロック
     if defined? data.ip_protocol
