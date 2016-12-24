@@ -22,6 +22,10 @@ class PacketWrapper
 
   end
 
+  def get_in_port()
+    return @in_port
+  end
+
   def get_source_ip()
     return @source_ip_address
   end

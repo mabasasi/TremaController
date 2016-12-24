@@ -15,7 +15,7 @@ class SimpleRouter < Trema::Controller
     @routing_table = RoutingTable.new(Configuration::ROUTES)
     @unresolved_packet_queue = Hash.new { [] }
     @permit_table = PermitTable.new
-    @packet_wrapper = PacketWrapper.new
+    @man = PacketWrapper.new
     @network = NetworkTable.new
 
     logger.info "#{name} started."
@@ -33,13 +33,16 @@ class SimpleRouter < Trema::Controller
 
   # rubocop:disable MethodLength
   def packet_in(dpid, packet_in)
-    @packet_wrapper.parse_packet(packet_in).show
+    @man.parse_packet(packet_in).show
+
+
+    @network.update(@man.get_in_port, @man.get_source_ip, @man.get_source_mac)
+    @network.dump
+
     unless sent_to_router?(packet_in)
       logger.info " This packet is destructed.(port=#{packet_in.in_port})"
       return
     end
-
-    puts "t1 : #{@network.get_out_port(@packet_wrapper.get_dest_ip)}"
 
     case packet_in.data
     when Arp::Request
@@ -49,8 +52,8 @@ class SimpleRouter < Trema::Controller
     when Parser::IPv4Packet
       packet_in_ipv4 dpid, packet_in
 
-      mac = @packet_wrapper.get_source_mac
-      ip  = @packet_wrapper.get_source_ip
+      mac = @man.get_source_mac
+      ip  = @man.get_source_ip
       @permit_table.add(mac, ip)
       #@permit_table.dump
     else
