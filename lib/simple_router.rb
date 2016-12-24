@@ -3,6 +3,7 @@ require 'interface'
 require 'routing_table'
 require 'permit_table'
 require 'packet_wrapper'
+require 'network_table'
 
 # Simple implementation of L3 switch in OpenFlow1.0
 # rubocop:disable ClassLength
@@ -15,6 +16,7 @@ class SimpleRouter < Trema::Controller
     @unresolved_packet_queue = Hash.new { [] }
     @permit_table = PermitTable.new
     @packet_wrapper = PacketWrapper.new
+    @network = NetworkTable.new
 
     logger.info "#{name} started."
   end
@@ -31,6 +33,8 @@ class SimpleRouter < Trema::Controller
       logger.info " This packet is destructed.(port=#{packet_in.in_port})"
       return
     end
+
+    @network.dump
 
     case packet_in.data
     when Arp::Request

@@ -10,11 +10,49 @@ class PacketWrapper
 
   def parse_packet(packet_in)
     reset
-    data = packet_in.data
+    attach packet_in.data
 
+    return self
+  end
+
+  def show()
+    puts "[#{@in_port}](#{@packet_class.name} #{parse_ip_protocol(@ip_protocol)}): " +
+      "#{@source_mac_address}(#{@source_ip_address}:#{@source_port}) -> " +
+      "#{@dest_mac_address}(#{@dest_ip_address}:#{@dest_port})"
+
+  end
+
+  def get_source_ip()
+    return @source_ip_address
+  end
+
+  def get_source_mac()
+    return @source_mac_address
+  end
+
+
+#===============================================================================
+  private
+
+  def reset()
+    @in_port            = nil
+    @packet_class       = nil
+    @ip_protocol        = nil
+
+    @source_ip_address  = nil
+    @source_mac_address = nil
+    @source_port        = nil
+    @dest_ip_address    = nil
+    @dest_mac_address   = nil
+    @dest_port          = nil
+  end
+
+  def attach(packet_in)
+    # 環境変数？
     @in_port  = packet_in.in_port
     @packet_class = packet_in.data.class
 
+    data = packet_in.data
 
     # ARPブロック
     # TODO 何故か変数を拾えないので、あると仮定して処理する
@@ -50,44 +88,7 @@ class PacketWrapper
     if defined? data.transport_destination_port
       @dest_port = data.transport_destination_port
     end
-
-    return self
   end
-
-
-
-  def show()
-    puts "[#{@in_port}](#{@packet_class.name} #{parse_ip_protocol(@ip_protocol)}): " +
-      "#{@source_mac_address}(#{@source_ip_address}:#{@source_port}) -> " +
-      "#{@dest_mac_address}(#{@dest_ip_address}:#{@dest_port})"
-  end
-
-  def get_source_ip()
-    return @source_ip_address
-  end
-
-  def get_source_mac()
-    return @source_mac_address
-  end
-
-
-
-  private
-
-  def reset()
-    @in_port            = nil
-    @packet_class       = nil
-    @ip_protocol        = nil
-
-    @source_ip_address  = nil
-    @source_mac_address = nil
-    @source_port        = nil
-    @dest_ip_address    = nil
-    @dest_mac_address   = nil
-    @dest_port          = nil
-  end
-
-
 
 
   def parse_ip_protocol(pid)
