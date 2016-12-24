@@ -40,10 +40,10 @@ class PermitTable
     return unless (defined? mac_address or defined? ip_address)
 
     if @db[mac_address]
-      puts "already exists."
+      #puts "already exists."
       @db[mac_address].access
     else
-      puts "new terminal."
+      #puts "new terminal."
       @db[mac_address] = PermitEntity.new(ip_address)
     end
   end
