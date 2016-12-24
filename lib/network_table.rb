@@ -17,7 +17,7 @@ class NetworkTable
    attr_reader :last_use_time #unixTime   最終使用時間
    attr_reader :traffic_ssize  #int        通信量
 
-   def initilize(in_port, ip_address, mac_address)
+   def initialize(in_port, ip_address, mac_address)
      @ip_address  = ip_address
      @mac_address = mac_address
      @exist_port  = in_port
