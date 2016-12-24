@@ -32,9 +32,6 @@ class SimpleRouter < Trema::Controller
       return
     end
 
-    puts "main :: "
-    puts (defined? packet_in.data.target_protocol_address) == nil
-
     case packet_in.data
     when Arp::Request
       packet_in_arp_request dpid, packet_in.in_port, packet_in.data
@@ -72,16 +69,6 @@ class SimpleRouter < Trema::Controller
         target_protocol_address: arp_request.sender_protocol_address
       ).to_binary,
       actions: SendOutPort.new(in_port))
-
-
-      puts "oth :: "
-      puts (arp_request.target_protocol_address.class)
-
-      puts "  send out #{in_port}"
-      puts "    dst: #{arp_request.source_mac}"
-      puts "    src: #{interface.mac_address}"
-      puts "    spa: #{arp_request.target_protocol_address}"
-      puts "    tpa: #{arp_request.sender_protocol_address}"
   end
   # rubocop:enable MethodLength
 
