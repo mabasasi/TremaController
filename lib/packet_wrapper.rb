@@ -19,8 +19,9 @@ class PacketWrapper
 
     # ARPブロック
     #if defined? packet_in.data.target_protocol_address
-      puts "abc -> #{defined? data.target_protocol_address}"
+    #  puts "abc -> #{nil? data.target_protocol_address}"
     #end
+    puts defined? data.target_protocol_address
 
     # IPブロック
     if defined? data.ip_protocol
