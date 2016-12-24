@@ -32,6 +32,9 @@ class SimpleRouter < Trema::Controller
       return
     end
 
+    p "bb "
+    puts (defined? packet_in.data.target_protocol_address) == nil
+
     case packet_in.data
     when Arp::Request
       packet_in_arp_request dpid, packet_in.in_port, packet_in.data
@@ -59,9 +62,6 @@ class SimpleRouter < Trema::Controller
       puts "  arp delete"
       return
     end
-
-    aa = arp_request.target_protocol_address
-    puts "#{aa}"
 
     send_packet_out(
       dpid,
