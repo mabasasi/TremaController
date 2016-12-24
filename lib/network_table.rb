@@ -39,6 +39,10 @@ class NetworkTable
      @traffic_size += length
    end
 
+   def add_masquerade_port(port)
+     @masq_port = port
+   end
+
    def to_s
      return "#{@ip_address}(#{@mac_address})[#{@exist_port}->#{@masq_port}] | count:#{@use_count} use:#{(@last_use_time-@add_time)} size:#{@traffic_size} | st:#{@add_time} ed:#{@last_use_time}"
    end
@@ -114,7 +118,7 @@ private
     #ないなら末尾に追加して返却
     puts "create new record in network table"
     nw = InterfaceEntity.new(in_port, ip_address, mac_address)
-    nw.masq_port = generate_masq_port
+    nw.add_masquerade_port(enerate_masq_port)
     @table.push nw
     return nw
   end
