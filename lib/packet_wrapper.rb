@@ -18,7 +18,7 @@ class PacketWrapper
 
     # ARPブロック
     if defined? $data
-      puts "arp:: #{$data}"
+      puts "arp:: #{$data}.methods"
     end
 
 
