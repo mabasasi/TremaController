@@ -18,7 +18,7 @@ class PacketWrapper
 
 
     # ARPブロック
-    add_if_defined(@source_mac_address, data.sender_protocol_address)
+    @source_mac_address = data.sender_protocol_address if defined? data.sender_protocol_address
 
     # IPブロック
     if defined? data.ip_protocol
@@ -79,12 +79,6 @@ class PacketWrapper
     @dest_ip_address    = nil
     @dest_mac_address   = nil
     @dest_port          = nil
-  end
-
-  def add_if_defined(variable, target)
-    if defined? target
-      variable = target
-    end
   end
 
 
