@@ -35,11 +35,7 @@ class SimpleRouter < Trema::Controller
   def packet_in(dpid, packet_in)
     @man.parse_packet(packet_in).show
 
-    pin = @man.get_in_port
-    pip = @man.get_source_ip
-    pmc = @man.get_source_mac
-
-    @network.update(pin, pip, pmc, 0)
+    @network.update(@man.packet_in, @man.source_ip_address, @man.source_mac_address, 0)
     @network.dump
 
     unless sent_to_router?(packet_in)
@@ -51,7 +47,7 @@ class SimpleRouter < Trema::Controller
     when Arp::Request
       #packet_in_arp_request dpid, packet_in.in_port, packet_in.data\
       puts "arp request process."
-      mac = @network_table.fetch_interface_mac_address(in_port, @man.get_dest_ip)
+      mac = @network_table.fetch_interface_mac_address(@man.in_port, @man.dest_ip_address)
       if (mac == nil)
         puts "unknown arp request"
         return
@@ -60,10 +56,10 @@ class SimpleRouter < Trema::Controller
       send_packet_out(
         dpid,
         raw_data: Arp::Reply.new(
-          destination_mac: @man.get_source_mac,
+          destination_mac: @man.source_mac_addresss,
           source_mac: mac,
-          sender_protocol_address: @man.get_dest_ip,
-          target_protocol_address: @man.get_source_ip
+          sender_protocol_address: @man.dest_ip_address,
+          target_protocol_address: @man.source_ip_address
         ).to_binary,
         actions: SendOutPort.new(in_port)
       )
