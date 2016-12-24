@@ -34,6 +34,8 @@ class SimpleRouter < Trema::Controller
 
     case packet_in.data
     when Arp::Request
+      puts packet_in.data.format
+      puts ""
       puts packet_in.data.format.methods
       puts ""
       puts packet_in.data.format.instance_variables
