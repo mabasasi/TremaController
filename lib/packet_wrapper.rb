@@ -18,10 +18,7 @@ class PacketWrapper
 
 
     # ARPブロック
-    #if defined? $data.target_protocol_address
-      puts "tpa:: #{packet_in.data.target_protocol_address}"
-    #end
-
+    add_if_defined(@source_mac_address, data.sender_protocol_address)
 
     # IPブロック
     if defined? data.ip_protocol
@@ -83,6 +80,13 @@ class PacketWrapper
     @dest_mac_address   = nil
     @dest_port          = nil
   end
+
+  def add_if_defined(variable, target)
+    if defined? target
+      variable = target
+    end
+
+
 
 
   def parse_ip_protocol(pid)
