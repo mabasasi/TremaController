@@ -11,7 +11,7 @@ class PacketWrapper
 
   def parse_packet(packet_in)
     reset
-    $data = packet_in.data
+    data = packet_in.data
 
     @in_port  = packet_in.in_port
     @packet_class = packet_in.data.class
@@ -19,33 +19,33 @@ class PacketWrapper
 
     # ARPブロック
     #if defined? $data.target_protocol_address
-      puts "tpa:: #{$data.target_protocol_address}"
+      puts "tpa:: #{packet_in.data.target_protocol_address}"
     #end
 
 
     # IPブロック
-    if defined? $data.ip_protocol
-      @ip_protocol = $data.ip_protocol
+    if defined? data.ip_protocol
+      @ip_protocol = data.ip_protocol
     end
 
-    if defined? $data.source_mac
-      @source_mac_address = $data.source_mac
+    if defined? data.source_mac
+      @source_mac_address = data.source_mac
     end
-    if defined? $data.source_ip_address
-      @source_ip_address = $data.source_ip_address
+    if defined? data.source_ip_address
+      @source_ip_address = data.source_ip_address
     end
-    if defined? $data.transport_source_port
-      @source_port = $data.transport_source_port
+    if defined? data.transport_source_port
+      @source_port = data.transport_source_port
     end
 
-    if defined? $data.destination_mac
-      @dest_mac = $data.destination_mac
+    if defined? data.destination_mac
+      @dest_mac = data.destination_mac
     end
-    if defined? $data.destination_ip_address
-      @dest_ip_address = $data.destination_ip_address
+    if defined? data.destination_ip_address
+      @dest_ip_address = data.destination_ip_address
     end
-    if defined? $data.transport_destination_port
-      @dest_port = $data.transport_destination_port
+    if defined? data.transport_destination_port
+      @dest_port = data.transport_destination_port
     end
 
     return self
