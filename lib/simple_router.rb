@@ -47,7 +47,7 @@ class SimpleRouter < Trema::Controller
     when Arp::Request
       #packet_in_arp_request dpid, packet_in.in_port, packet_in.data\
       puts "arp request process."
-      mac = @network_table.fetch_interface_mac_address(@man.in_port, @man.dest_ip_address)
+      mac = @network.fetch_interface_mac_address(@man.in_port, @man.dest_ip_address)
       if (mac == nil)
         puts "unknown arp request"
         return
