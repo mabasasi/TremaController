@@ -18,9 +18,9 @@ class PacketWrapper
 
 
     # ARPブロック
-    if defined? $data.target_protocol_address
+    #if defined? $data.target_protocol_address
       puts "tpa:: #{$data.target_protocol_address}"
-    end
+    #end
 
 
     # IPブロック
