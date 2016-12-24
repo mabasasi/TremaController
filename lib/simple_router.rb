@@ -35,8 +35,11 @@ class SimpleRouter < Trema::Controller
   def packet_in(dpid, packet_in)
     @man.parse_packet(packet_in).show
 
+    pin = @man.get_in_port
+    pip = @man.get_source_ip
+    pmc = @man.get_source_mac
 
-    @network.update(@man.get_in_port, @man.get_source_ip, @man.get_source_mac, 0)
+    @network.update(pin, pip, pmc, 0)
     @network.dump
 
     unless sent_to_router?(packet_in)
@@ -46,15 +49,32 @@ class SimpleRouter < Trema::Controller
 
     case packet_in.data
     when Arp::Request
-      packet_in_arp_request dpid, packet_in.in_port, packet_in.data
+      #packet_in_arp_request dpid, packet_in.in_port, packet_in.data\
+      puts "arp request process."
+      mac = @network_table.fetch_interface_mac_address(in_port, @man.get_dest_ip)
+      if (mac == nil)
+        puts "unknown arp request"
+        return
+      end
+
+      send_packet_out(
+        dpid,
+        raw_data: Arp::Reply.new(
+          destination_mac: @man.get_source_mac,
+          source_mac: mac,
+          sender_protocol_address: @man.get_dest_ip,
+          target_protocol_address: @man.get_source_ip
+        ).to_binary,
+        actions: SendOutPort.new(in_port)
+      )
+
     when Arp::Reply
       packet_in_arp_reply dpid, packet_in
     when Parser::IPv4Packet
       packet_in_ipv4 dpid, packet_in
-
-      mac = @man.get_source_mac
-      ip  = @man.get_source_ip
-      @permit_table.add(mac, ip)
+      #mac = @man.get_source_mac
+      #ip  = @man.get_source_ip
+      #@permit_table.add(mac, ip)
       #@permit_table.dump
     else
       logger.debug "Dropping unsupported packet type: #{packet_in.data.inspect}"

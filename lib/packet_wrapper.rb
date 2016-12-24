@@ -38,7 +38,6 @@ class PacketWrapper
     return @dest_ip_address
   end
 
-
 #===============================================================================
   private
 
