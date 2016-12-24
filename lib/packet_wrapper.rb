@@ -10,7 +10,7 @@ class PacketWrapper
 
   def parse_packet(packet_in)
     reset
-    attach packet_in.data
+    attach packet_in
 
     return self
   end
