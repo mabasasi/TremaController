@@ -35,7 +35,7 @@ class SimpleRouter < Trema::Controller
   def packet_in(dpid, packet_in)
     @man.parse_packet(packet_in).show
 
-    @network.update(@man.packet_in, @man.source_ip_address, @man.source_mac_address, 0)
+    @network.update(@man.in_port, @man.source_ip_address, @man.source_mac_address, 0)
     @network.dump
 
     unless sent_to_router?(packet_in)

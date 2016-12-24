@@ -1,6 +1,16 @@
 
 class PacketWrapper
-    include Pio
+  include Pio
+
+  attr_reader :in_port
+  attr_reader :packet_class
+  attr_reader :ip_protocol
+  attr_reader :source_ip_address
+  attr_reader :source_mac_address
+  attr_reader :dest_ip_address
+  attr_reader :dest_mac_addresss
+  attr_reader :dest_port
+
 
   def initialize()
     reset
@@ -22,21 +32,6 @@ class PacketWrapper
 
   end
 
-  def get_in_port()
-    return @in_port
-  end
-
-  def get_source_ip()
-    return @source_ip_address
-  end
-
-  def get_source_mac()
-    return @source_mac_address
-  end
-
-  def get_dest_ip()
-    return @dest_ip_address
-  end
 
 #===============================================================================
   private
