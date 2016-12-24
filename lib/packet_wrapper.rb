@@ -18,11 +18,12 @@ class PacketWrapper
 
 
     # ARPブロック
-    #if defined? packet_in.data.target_protocol_address
-    #  puts "abc -> #{nil? data.target_protocol_address}"
-    #end
-    puts "sub :: "
-    puts (defined? packet_in.data.target_protocol_address) == nil
+    # TODO 何故か変数を拾えないので、あると仮定して処理する
+    if (data == Arp::Request)
+      @source_mac_address = data.source_mac
+      @source_ip_address = data.sender_protocol_address
+      @dest_ip_address   = data.target_protocol_address
+    end
 
     # IPブロック
     if defined? data.ip_protocol
