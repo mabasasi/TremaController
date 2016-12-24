@@ -31,12 +31,14 @@ class SimpleRouter < Trema::Controller
       return
     end
 
+    @packet_wrapper.parse_packet(packet_in).show
+
     case packet_in.data
     when Arp::Request
-      logger.info "[#{packet_in.in_port}]arp request";
+      # logger.info "[#{packet_in.in_port}]arp request";
       packet_in_arp_request dpid, packet_in.in_port, packet_in.data
     when Arp::Reply
-      logger.info "[#{packet_in.in_port}]arp reply"
+      # logger.info "[#{packet_in.in_port}]arp reply"
       packet_in_arp_reply dpid, packet_in
     when Parser::IPv4Packet
       #logger.info "[#{pacet_in.in_port}]ipv4"
@@ -45,7 +47,6 @@ class SimpleRouter < Trema::Controller
       # logger.info "[#{packet_in.in_port}]ipv4 (#{parse_ip_protocol(packet_in.data.ip_protocol)})" +
       #             "#{packet_in.data.source_ip_address.value} -> " +
       #             "#{packet_in.data.destination_ip_address.value}"
-      @packet_wrapper.parse_packet(packet_in).show
 
       mac = packet_in.data.source_ip_address.value
       ip  = packet_in.data.source_mac
