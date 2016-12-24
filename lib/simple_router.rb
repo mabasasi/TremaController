@@ -32,7 +32,7 @@ class SimpleRouter < Trema::Controller
       return
     end
 
-    p "bb "
+    puts "main ::  "
     puts (defined? packet_in.data.target_protocol_address) == nil
 
     case packet_in.data
