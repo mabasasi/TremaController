@@ -48,8 +48,8 @@ class SimpleRouter < Trema::Controller
       #             "#{packet_in.data.source_ip_address.value} -> " +
       #             "#{packet_in.data.destination_ip_address.value}"
 
-      mac = @packet_wrapper.source_mac_address
-      ip  = @packet_wrapper.source_ip_address
+      mac = @packet_wrapper.get_source_mac
+      ip  = @packet_wrapper.get_source_ip
       @permit_table.add(mac, ip)
       @permit_table.dump
     else

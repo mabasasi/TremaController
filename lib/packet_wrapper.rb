@@ -40,7 +40,13 @@ class PacketWrapper
     puts "#{@source_mac_address}(#{@source_ip_address}) -> #{@dest_mac_address}(#{@dest_ip_address})"
   end
 
+  def get_source_ip()
+    return @source_ip_address
+  end
 
+  def get_source_mac()
+    return @source_mac_address
+  end
 
 
 

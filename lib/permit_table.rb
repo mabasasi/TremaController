@@ -37,6 +37,8 @@ class PermitTable
 
 
   def add(mac_address, ip_address)
+    return unless (defined? mac_address or defined? ip_address)
+
     if @db[mac_address]
       puts "already exists."
       @db[mac_address].access
