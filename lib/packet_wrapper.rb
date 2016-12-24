@@ -85,6 +85,7 @@ class PacketWrapper
     if defined? target
       variable = target
     end
+  end
 
 
 
