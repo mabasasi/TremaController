@@ -14,11 +14,11 @@ class PacketWrapper
     data = packet_in.data
 
     @in_port  = packet_in.in_port
-    @packet_class = packet_in.data.class
+    @packet_class = packet_in.data.classc
 
 
     # ARPブロック
-    puts "tes -> #{defined? packet_in.data.target_protocol_address}"
+    puts "tes -> #{packet_in.data.target_protocol_address}"
     if defined? packet_in.data.target_protocol_address
       puts "spa -> #{packet_in.data.target_protocol_address}"
     end
