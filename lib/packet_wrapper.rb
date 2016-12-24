@@ -18,8 +18,7 @@ class PacketWrapper
 
     # ARPブロック
     # TODO 何故か変数を拾えないので、あると仮定して処理する
-    case packet_in.data
-    when Arp::Request
+    if @packet_class == Arp::Request
       puts "req"
       @source_mac_address = packet_in.data.source_mac
       @source_ip_address = packet_in.data.sender_protocol_address
