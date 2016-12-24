@@ -61,7 +61,7 @@ class SimpleRouter < Trema::Controller
           sender_protocol_address: @man.dest_ip_address,
           target_protocol_address: @man.source_ip_address
         ).to_binary,
-        actions: SendOutPort.new(in_port)
+        actions: SendOutPort.new(@man.in_port)
       )
 
     when Arp::Reply
