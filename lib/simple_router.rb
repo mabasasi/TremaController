@@ -29,7 +29,7 @@ class SimpleRouter < Trema::Controller
     @packet_wrapper.parse_packet(packet_in).show
 
     unless sent_to_router?(packet_in)
-      logger.info "  This packet is destructed.(port=#{packet_in.in_port})"
+      logger.info " This packet is destructed.(port=#{packet_in.in_port})"
       return
     end
 
@@ -51,7 +51,7 @@ class SimpleRouter < Trema::Controller
       mac = @packet_wrapper.get_source_mac
       ip  = @packet_wrapper.get_source_ip
       @permit_table.add(mac, ip)
-      @permit_table.dump
+      #@permit_table.dump
     else
       logger.debug "Dropping unsupported packet type: #{packet_in.data.inspect}"
     end
