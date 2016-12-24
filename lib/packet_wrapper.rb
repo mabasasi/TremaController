@@ -19,7 +19,7 @@ class PacketWrapper
     reset
     $data = packet_in.data
 
-    @source_port  = packet_in.ip_port
+    @source_port  = packet_in.in_port
     @packet_class = packet_in.data.class
 
     if defined? $data.source_mac
