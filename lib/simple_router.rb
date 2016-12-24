@@ -34,7 +34,8 @@ class SimpleRouter < Trema::Controller
 
     case packet_in.data
     when Arp::Request
-    puts "ar #{packet_in.data.target_protocol_address}"
+      puts "spa -> #{packet_in.data.target_protocol_address}"
+      puts "ar #{packet_in.data.target_protocol_address}"
       packet_in_arp_request dpid, packet_in.in_port, packet_in.data
     when Arp::Reply
       packet_in_arp_reply dpid, packet_in
@@ -70,6 +71,7 @@ class SimpleRouter < Trema::Controller
         target_protocol_address: arp_request.sender_protocol_address
       ).to_binary,
       actions: SendOutPort.new(in_port))
+
 
       puts "  send out #{in_port}"
       puts "    dst: #{arp_request.source_mac}"
