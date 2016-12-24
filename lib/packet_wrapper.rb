@@ -16,11 +16,10 @@ class PacketWrapper
     @in_port  = packet_in.in_port
     @packet_class = packet_in.data.class
 
-
+    # IPブロック
     if defined? $data.ip_protocol
       @ip_protocol = $data.ip_protocol
     end
-
 
     if defined? $data.source_mac
       @source_mac_address = $data.source_mac
@@ -48,7 +47,7 @@ class PacketWrapper
 
 
   def show()
-    puts "[#{@ip_port}](#{@packet_class} #{parse_ip_protocol(@ip_protocol)}): " +
+    puts "[#{@in_port}](#{@packet_class.name} #{parse_ip_protocol(@ip_protocol)}): " +
       "#{@source_mac_address}(#{@source_ip_address}:#{@source_port}) -> " +
       "#{@dest_mac_address}(#{@dest_ip_address}:#{@dest_port})"
   end
