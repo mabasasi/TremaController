@@ -21,6 +21,7 @@ class PacketWrapper
     #if defined? packet_in.data.target_protocol_address
     #  puts "abc -> #{nil? data.target_protocol_address}"
     #end
+    p "sub :: "
     puts (defined? packet_in.data.target_protocol_address) == nil
 
     # IPブロック
