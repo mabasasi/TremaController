@@ -13,7 +13,16 @@ class PacketWrapper
 
 
   def initialize()
-    reset
+    @in_port            = nil
+    @packet_class       = nil
+    @ip_protocol        = nil
+
+    @source_ip_address  = nil
+    @source_mac_address = nil
+    @source_port        = nil
+    @dest_ip_address    = nil
+    @dest_mac_address   = nil
+    @dest_port          = nil
   end
 
 
