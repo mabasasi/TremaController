@@ -18,9 +18,9 @@ class PacketWrapper
 
 
     # ARPブロック
-    if defined? packet_in.data.target_protocol_address
+    #if defined? packet_in.data.target_protocol_address
       puts "abc -> #{packet_in.data.all_symbols}"
-    end
+    #end
 
     # IPブロック
     if defined? data.ip_protocol
