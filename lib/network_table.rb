@@ -29,13 +29,9 @@ class NetworkTable
      @traffic_size  = 0
    end
 
-   def update
+   def update(length)
      @use_count +=1
      @last_use_time = Time.now
-   end
-
-   def update(length)
-     update
      @traffic_size += length
    end
 
