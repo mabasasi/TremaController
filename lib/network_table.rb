@@ -104,6 +104,7 @@ private
     puts "confirm."
     return pp;
   end
+  
 
   def fetch_table(in_port, ip_address, mac_address)
     # 存在するなら返却
