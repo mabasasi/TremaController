@@ -35,18 +35,11 @@ class SimpleRouter < Trema::Controller
 
     case packet_in.data
     when Arp::Request
-      # logger.info "[#{packet_in.in_port}]arp request";
       packet_in_arp_request dpid, packet_in.in_port, packet_in.data
     when Arp::Reply
-      # logger.info "[#{packet_in.in_port}]arp reply"
       packet_in_arp_reply dpid, packet_in
     when Parser::IPv4Packet
-      #logger.info "[#{pacet_in.in_port}]ipv4"
       packet_in_ipv4 dpid, packet_in
-      #logger.info "  src: #{packet_in.data}"
-      # logger.info "[#{packet_in.in_port}]ipv4 (#{parse_ip_protocol(packet_in.data.ip_protocol)})" +
-      #             "#{packet_in.data.source_ip_address.value} -> " +
-      #             "#{packet_in.data.destination_ip_address.value}"
 
       mac = @packet_wrapper.get_source_mac
       ip  = @packet_wrapper.get_source_ip
@@ -63,7 +56,11 @@ class SimpleRouter < Trema::Controller
     interface =
       Interface.find_by(port_number: in_port,
                         ip_address: arp_request.target_protocol_address)
-    return unless interface
+    unless interface
+      puts "  arp delete"
+      return
+    end
+
     send_packet_out(
       dpid,
       raw_data: Arp::Reply.new(
