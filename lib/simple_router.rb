@@ -2,6 +2,7 @@ require 'arp_table'
 require 'interface'
 require 'routing_table'
 require 'permit_table'
+require 'packet_wrapper'
 
 # Simple implementation of L3 switch in OpenFlow1.0
 # rubocop:disable ClassLength
@@ -13,6 +14,7 @@ class SimpleRouter < Trema::Controller
     @routing_table = RoutingTable.new(Configuration::ROUTES)
     @unresolved_packet_queue = Hash.new { [] }
     @permit_table = PermitTable.new
+    @packet_wrapper = PacketWrapper.new
 
     logger.info "#{name} started."
   end
@@ -21,10 +23,11 @@ class SimpleRouter < Trema::Controller
     logger.info "ready dpid=#{dpid}"
     send_flow_mod_delete(dpid, match: Match.new)
   end
+
   # rubocop:disable MethodLength
   def packet_in(dpid, packet_in)
     unless sent_to_router?(packet_in)
-      logger.info packet_in.data 
+      logger.info packet_in.data
       return
     end
 
@@ -39,10 +42,11 @@ class SimpleRouter < Trema::Controller
       #logger.info "[#{pacet_in.in_port}]ipv4"
       packet_in_ipv4 dpid, packet_in
       #logger.info "  src: #{packet_in.data}"
-      logger.info "[#{packet_in.in_port}]ipv4 (#{parse_ip_protocol(packet_in.data.ip_protocol)})" +
-                  "#{packet_in.data.source_ip_address.value} -> " +
-                  "#{packet_in.data.destination_ip_address.value}"      
-      
+      # logger.info "[#{packet_in.in_port}]ipv4 (#{parse_ip_protocol(packet_in.data.ip_protocol)})" +
+      #             "#{packet_in.data.source_ip_address.value} -> " +
+      #             "#{packet_in.data.destination_ip_address.value}"
+      @packet_wrapper.parse_packet(packet_in).show
+
       mac = packet_in.data.source_ip_address.value
       ip  = packet_in.data.source_mac
       @permit_table.add(mac, ip)
@@ -122,7 +126,6 @@ class SimpleRouter < Trema::Controller
 
     return pid
   end
-
 
 
 
