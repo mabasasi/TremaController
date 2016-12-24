@@ -14,7 +14,7 @@ class PacketWrapper
     data = packet_in.data
 
     @in_port  = packet_in.in_port
-    @packet_class = packet_in.data.classc
+    @packet_class = packet_in.data.class
 
 
     # ARPブロック
