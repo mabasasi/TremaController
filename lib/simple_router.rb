@@ -27,7 +27,7 @@ class SimpleRouter < Trema::Controller
   # rubocop:disable MethodLength
   def packet_in(dpid, packet_in)
     unless sent_to_router?(packet_in)
-      logger.info "This packet is destructed."
+      logger.info "This packet is destructed.(port=#{packet_in.in_port})"
       return
     end
 
