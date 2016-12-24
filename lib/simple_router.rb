@@ -34,7 +34,7 @@ class SimpleRouter < Trema::Controller
 
     case packet_in.data
     when Arp::Request
-      puts "ttt -> #{packet_in.data.method_defined?(:target_protocol_address)}"
+      p packet_in.data.method_defined?(:target_protocol_address)
       puts "ar #{packet_in.data.target_protocol_address}"
       packet_in_arp_request dpid, packet_in.in_port, packet_in.data
     when Arp::Reply
