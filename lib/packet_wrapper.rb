@@ -19,7 +19,7 @@ class PacketWrapper
 
     # ARPブロック
     #if defined? packet_in.data.target_protocol_address
-      puts "abc -> #{packet_in.raw_data}"
+      puts "abc -> #{packet_in.class_variables}"
     #end
 
     # IPブロック
