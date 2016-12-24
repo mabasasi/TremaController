@@ -48,7 +48,7 @@ class PacketWrapper
 
 
   def show()
-    puts "[#{@source_port}](#{@packet_class} #{parse_ip_protocol(@ip_protocol)}): " +
+    puts "[#{@ip_port}](#{@packet_class} #{parse_ip_protocol(@ip_protocol)}): " +
       "#{@source_mac_address}(#{@source_ip_address}:#{@source_port}) -> " +
       "#{@dest_mac_address}(#{@dest_ip_address}:#{@dest_port})"
   end
