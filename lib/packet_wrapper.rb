@@ -61,11 +61,16 @@ class PacketWrapper
     # ARPブロック
     # TODO 何故か変数を拾えないので、あると仮定して処理する
     if @packet_class == Arp::Request
-      puts "req"
       @source_mac_address = packet_in.data.source_mac
       @source_ip_address = packet_in.data.sender_protocol_address
       @dest_ip_address   = packet_in.data.target_protocol_address
+    elsif @packet_class == Arp::Reply
+      @source_mac_address = packet_in.data.source_mac
+      @dest_mac_address = packet_in.data.dest_mac
+      @source_ip_address = packet_in.data.sender_protocol_address
+      @dest_ip_address   = packet_in.data.target_protocol_address
     end
+
 
 
     # IPブロック

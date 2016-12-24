@@ -87,6 +87,8 @@ class SimpleRouter < Trema::Controller
   end
   # rubocop:enable MethodLength
 
+
+
   def packet_in_arp_reply(dpid, packet_in)
     @arp_table.update(packet_in.in_port,
                       packet_in.sender_protocol_address,
