@@ -118,7 +118,7 @@ private
     #ないなら末尾に追加して返却
     puts "create new record in network table"
     nw = InterfaceEntity.new(in_port, ip_address, mac_address)
-    nw.add_masquerade_port(enerate_masq_port)
+    nw.add_masquerade_port(generate_masq_port)
     @table.push nw
     return nw
   end
