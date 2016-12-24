@@ -30,6 +30,10 @@ class PacketWrapper
     return @source_mac_address
   end
 
+  def get_dest_ip()
+    return @dest_ip_address
+  end
+
 
 #===============================================================================
   private

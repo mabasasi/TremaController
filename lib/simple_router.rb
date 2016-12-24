@@ -26,6 +26,11 @@ class SimpleRouter < Trema::Controller
     send_flow_mod_delete(dpid, match: Match.new)
   end
 
+
+
+
+
+
   # rubocop:disable MethodLength
   def packet_in(dpid, packet_in)
     @packet_wrapper.parse_packet(packet_in).show
@@ -34,7 +39,7 @@ class SimpleRouter < Trema::Controller
       return
     end
 
-    @network.dump
+    puts "t1 : #{@network.get_out_port(@packet_wrapper.get_dest_ip)}"
 
     case packet_in.data
     when Arp::Request
@@ -53,6 +58,12 @@ class SimpleRouter < Trema::Controller
     end
   end
   # rubocop:enable MethodLength
+
+
+
+
+
+
 
   # rubocop:disable MethodLength
   def packet_in_arp_request(dpid, in_port, arp_request)
