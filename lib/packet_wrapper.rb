@@ -18,7 +18,7 @@ class PacketWrapper
 
 
     # ARPブロック
-    if defined? packet_in.data.target_protocol_address
+    if defined? packet_in.data.target_protocol_address != nil
       puts "spa -> #{packet_in.data.target_protocol_address}"
     end
 
