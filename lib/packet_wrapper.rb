@@ -17,8 +17,8 @@ class PacketWrapper
     @packet_class = packet_in.data.class
 
     # ARPブロック
-    if defined? $data.arp_request
-      puts "arp:: #{$data.arp_request}"
+    if defined? $data
+      puts "arp:: #{$data}"
     end
 
 
