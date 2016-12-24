@@ -116,22 +116,6 @@ class SimpleRouter < Trema::Controller
 
   private
 
-  def parse_ip_protocol(pid)
-    if pid == 1 then
-      return "ICMP"
-    elsif pid == 6 then
-      return "TCP"
-    elsif pid == 17 then
-      return "UDP"
-    end
-
-    return pid
-  end
-
-
-
-
-
   def sent_to_router?(packet_in)
     return true if packet_in.destination_mac.broadcast?
     interface = Interface.find_by(port_number: packet_in.in_port)
