@@ -9,7 +9,7 @@ class PermitTable
     attr_reader :first_access_time
     attr_reader :last_access_time
     attr_reader :access_count
-    
+
     def initialize(ip_address)
       @ip_address        = ip_address
       @first_access_time = Time.now
@@ -21,7 +21,7 @@ class PermitTable
       @last_access_time = Time.now
       @access_count    += 1
     end
-    
+
     def to_s()
       time = @last_access_time - @first_access_time
 
@@ -45,7 +45,7 @@ class PermitTable
       @db[mac_address] = PermitEntity.new(ip_address)
     end
   end
-  
+
 
 
   def dump()
@@ -55,7 +55,7 @@ class PermitTable
     end
 
     @db.each{|key, value|
-      puts "  #{key} => #{value}"
+      puts "  #{key} : #{value}"
     }
   end
 
