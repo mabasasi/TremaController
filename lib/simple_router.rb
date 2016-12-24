@@ -32,7 +32,7 @@ class SimpleRouter < Trema::Controller
       return
     end
 
-    puts "main ::  "
+    puts "main :: "
     puts (defined? packet_in.data.target_protocol_address) == nil
 
     case packet_in.data
@@ -74,6 +74,8 @@ class SimpleRouter < Trema::Controller
       actions: SendOutPort.new(in_port))
 
 
+      puts "oth :: "
+      puts (defined? arp_request.target_protocol_address) == nil
       puts "  send out #{in_port}"
       puts "    dst: #{arp_request.source_mac}"
       puts "    src: #{interface.mac_address}"
