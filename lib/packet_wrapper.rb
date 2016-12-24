@@ -1,7 +1,6 @@
 
-
 class PacketWrapper
-
+    include Pio
 
   def initialize()
     reset
