@@ -34,7 +34,6 @@ class SimpleRouter < Trema::Controller
 
     case packet_in.data
     when Arp::Request
-      puts "ar #{packet_in.data.to_yaml}"
       packet_in_arp_request dpid, packet_in.in_port, packet_in.data
     when Arp::Reply
       packet_in_arp_reply dpid, packet_in
@@ -60,6 +59,9 @@ class SimpleRouter < Trema::Controller
       puts "  arp delete"
       return
     end
+
+    aa = arp_request.target_protocol_address
+    puts "#{aa}"
 
     send_packet_out(
       dpid,
