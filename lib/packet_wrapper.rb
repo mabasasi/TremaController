@@ -16,6 +16,15 @@ class PacketWrapper
     @in_port  = packet_in.in_port
     @packet_class = packet_in.data.class
 
+    # ARPブロック
+    if defined? $data.target_protocol_address
+      puts "tpa:: #{$data.target_protocol_address}"
+    end
+    if defined? $data.sender_protocol_address
+      puts "spa:: #{$data.sender_protocol_address}"
+    end
+
+
     # IPブロック
     if defined? $data.ip_protocol
       @ip_protocol = $data.ip_protocol
