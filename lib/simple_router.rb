@@ -56,7 +56,7 @@ class SimpleRouter < Trema::Controller
       send_packet_out(
         dpid,
         raw_data: Arp::Reply.new(
-          destination_mac: @man.source_mac_addresss,
+          destination_mac: @man.source_mac_address,
           source_mac: mac,
           sender_protocol_address: @man.dest_ip_address,
           target_protocol_address: @man.source_ip_address
