@@ -69,11 +69,11 @@ class NetworkTable
   # end
 
   # テーブル更新
-  def update_table(in_port, ip_address, mac_address)
+  def update(in_port, ip_address, mac_address)
     nw = fetch_table(in_port, ip_address, mac_address)
     nw.update
   end
-  def update_table(in_port, ip_address, mac_address, length)
+  def update(in_port, ip_address, mac_address, length)
     nw = fetch_table(in_port, ip_address, mac_address)
     nw.update(length)
   end
