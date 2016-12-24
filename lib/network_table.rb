@@ -108,7 +108,7 @@ private
   def fetch_table(in_port, ip_address, mac_address)
     # 存在するなら返却
     @table.each{|value|
-      return value if value.in_port == in_port and value.ip_address == ip_address and value.mac_address = mac_address
+      return value if value.exist_port == in_port and value.ip_address == ip_address and value.mac_address = mac_address
     }
 
     #ないなら末尾に追加して返却
