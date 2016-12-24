@@ -36,7 +36,7 @@ class SimpleRouter < Trema::Controller
     when Arp::Request
       puts packet_in.data.methods
       puts ""
-      puts instance_variables packet_in.data
+      puts packet_in.data.instance_variables
       puts ""
       puts packet_in.data.class_variables
       puts ""
