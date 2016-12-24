@@ -70,6 +70,8 @@ class SimpleRouter < Trema::Controller
         target_protocol_address: arp_request.sender_protocol_address
       ).to_binary,
       actions: SendOutPort.new(in_port))
+
+      puts "  send out #{in_port}"
   end
   # rubocop:enable MethodLength
 
