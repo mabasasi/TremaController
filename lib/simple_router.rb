@@ -75,8 +75,7 @@ class SimpleRouter < Trema::Controller
 
 
       puts "oth :: "
-      puts (defined? arp_request.target_protocol_address) == nil
-      puts (arp_request.method_defined?(:target_protocol_address))
+      puts (arp_request.target_protocol_address.class)
 
       puts "  send out #{in_port}"
       puts "    dst: #{arp_request.source_mac}"
