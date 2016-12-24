@@ -58,6 +58,7 @@ class PacketWrapper
 
     data = packet_in.data
 
+
     # ARPブロック
     # TODO 何故か変数を拾えないので、あると仮定して処理する
     if @packet_class == Arp::Request
