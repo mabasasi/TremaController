@@ -17,11 +17,8 @@ class PacketWrapper
     @packet_class = packet_in.data.class
 
     # ARPブロック
-    if defined? $data.target_protocol_address
-      puts "tpa:: #{$data.target_protocol_address}"
-    end
-    if defined? $data.sender_protocol_address
-      puts "spa:: #{$data.sender_protocol_address}"
+    if defined? $data.arp_request
+      puts "arp:: #{$data.arp_request}"
     end
 
 
