@@ -5,7 +5,9 @@ class NetworkTable
   # IANA勧告
   MASQ_PORT_RANGE = 49152..65535
 
-  include 'PIO'
+  include Pio
+
+  
   class NetworkEntity
     attr_reader :ip_address    #IPAddr     端末のIPアドレス＋ネットマスク
     attr_reader :mac_address   #PIO::MAC   端末のMACアドレス
