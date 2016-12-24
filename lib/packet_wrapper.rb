@@ -21,9 +21,9 @@ class PacketWrapper
     case packet_in.data
     when Arp::Request
       puts "req"
-      @source_mac_address = data.source_mac
-      @source_ip_address = data.sender_protocol_address
-      @dest_ip_address   = data.target_protocol_address
+      @source_mac_address = packet_in.data.source_mac
+      @source_ip_address = packet_in.data.sender_protocol_address
+      @dest_ip_address   = packet_in.data.target_protocol_address
     end
 
 
