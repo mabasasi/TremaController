@@ -62,9 +62,9 @@ class NetworkTable
     @random = Random.new
 
     @if = {}
-    @if[1] = InterfaceEntity.new(IPAddr.new("172.16.0.2"),    Mac.new("01:01:01:01:01:01"), IPAddr.new("172.16.0.0/24"))
-    @if[2] = InterfaceEntity.new(IPAddr.new("192.168.100.1"), Mac.new("02:02:02:02:02:02"), IPAddr.new("192.168.100.0/24"))
-    @if[3] = InterfaceEntity.new(IPAddr.new("192.168.200.1"), Mac.new("03:03:03:03:03:03"), IPAddr.new("192.168.200.0/24"))
+    @if[1] = InterfaceEntity.new(IPAddr.new("172.16.0.2"),    PIO::Mac.new("01:01:01:01:01:01"), IPAddr.new("172.16.0.0/24"))
+    @if[2] = InterfaceEntity.new(IPAddr.new("192.168.100.1"), PIO::Mac.new("02:02:02:02:02:02"), IPAddr.new("192.168.100.0/24"))
+    @if[3] = InterfaceEntity.new(IPAddr.new("192.168.200.1"), PIO::Mac.new("03:03:03:03:03:03"), IPAddr.new("192.168.200.0/24"))
     @dgw = IPAddr.new("172.16.0.1/32")
 
     @table = []
