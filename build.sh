@@ -17,7 +17,7 @@ sudo ovs-vsctl add-port ovs ovsbr
 
 sudo ip link set brovs master br
 sudo ip link set enx8857ee229e4d master br
-sudo ip link set brns1 br
+sudo ip link set brns1 master br
 
 sudo ip link set enx8857ee229e5c
 sudo ip link set ovs up
