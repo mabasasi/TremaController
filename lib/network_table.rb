@@ -59,24 +59,51 @@ class NetworkTable
 
   end
 
+#===============================================================================
 
 
   def initialize()
     @random = Random.new
 
-    @if = {}
-    @if[1] = InterfaceEntity.new(IPAddr.new("172.16.0.2"),    Mac.new("01:01:01:01:01:01"), IPAddr.new("172.16.0.0/24"))
-    @if[2] = InterfaceEntity.new(IPAddr.new("192.168.100.1"), Mac.new("02:02:02:02:02:02"), IPAddr.new("192.168.100.0/24"))
-    @if[3] = InterfaceEntity.new(IPAddr.new("192.168.200.1"), Mac.new("03:03:03:03:03:03"), IPAddr.new("192.168.200.0/24"))
-    @dgw = IPAddr.new("172.16.0.1/32")
+    @itf = {}
+    @itf[1] = InterfaceEntity.new(IPAddr.new("172.16.0.2/32"),    Mac.new("01:01:01:01:01:01"), IPAddr.new("172.16.0.0/24"))
+    @itf[2] = InterfaceEntity.new(IPAddr.new("192.168.100.1/32"), Mac.new("02:02:02:02:02:02"), IPAddr.new("192.168.100.0/24"))
+    @itf[3] = InterfaceEntity.new(IPAddr.new("192.168.200.1/32"), Mac.new("03:03:03:03:03:03"), IPAddr.new("192.168.200.0/24"))
+    @dgw = 1
 
     @table = []
   end
 
+  # 自身が保持しているインターフェースかどうか
+  def own_interface_address?(ip_address)
+    @table.each{|value|
+      return true if value.ip_address.include?(ip_address)
+    }
+    return false
+  end
 
+  # 自身が知っているネットワークアドレスかどうか
+  def own_network_address?(in_port, ip_address)
+    #自分自身のネットワークの場合
+    return @itf[in_port] if (@itf[in_port].nw_address.include?(ip_address))
+
+    #スイッチが知っているネットワークアドレスかどうか
+    @itf.each{|key, value|
+      return value if (value.nw_address.include?(ip_address))
+    }
+
+    #それ以外の場合は、DGWに転送
+    return @itf[@dgw]
+  end
+
+
+
+
+
+  # インターフェースのmacアドレスを返却する
   def fetch_interface_mac_address(in_port, target_protocol_address)
-    return unless @if[in_port].ip_address == target_protocol_address
-    return @if[in_port].mac_address
+    return unless @itf[in_port].ip_address == target_protocol_address
+    return @itf[in_port].mac_address
   end
 
 
@@ -132,7 +159,6 @@ private
     @table.push nw
     return nw
   end
-
 
 
 

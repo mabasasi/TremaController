@@ -8,13 +8,14 @@ require 'network_table'
 # Simple implementation of L3 switch in OpenFlow1.0
 # rubocop:disable ClassLength
 class SimpleRouter < Trema::Controller
+  timer_event :dump_table, interval: 10.sec
+
   def start(_args)
     load File.join(__dir__, '..', 'simple_router.conf')
     Interface.load_configuration Configuration::INTERFACES
     @arp_table = ArpTable.new
     @routing_table = RoutingTable.new(Configuration::ROUTES)
     @unresolved_packet_queue = Hash.new { [] }
-    @permit_table = PermitTable.new
     @man = PacketWrapper.new
     @network = NetworkTable.new
 
@@ -26,74 +27,36 @@ class SimpleRouter < Trema::Controller
     send_flow_mod_delete(dpid, match: Match.new)
   end
 
-
-
-
-
-
   # rubocop:disable MethodLength
   def packet_in(dpid, packet_in)
     @man.parse_packet(packet_in).show
 
     @network.update(@man.in_port, @man.source_ip_address, @man.source_mac_address, 0)
-    @network.dump
 
     unless sent_to_router?(packet_in)
-      logger.info " This packet is destructed.(port=#{packet_in.in_port})"
+      puts "this packet is unknown."
       return
     end
 
     case packet_in.data
     when Arp::Request
-      #packet_in_arp_request dpid, packet_in.in_port, packet_in.data\
-      puts "arp request process."
-      mac = @network.fetch_interface_mac_address(@man.in_port, @man.dest_ip_address)
-      if (mac == nil)
-        puts "unknown arp request"
-        return
-      end
-
-      send_packet_out(
-        dpid,
-        raw_data: Arp::Reply.new(
-          destination_mac: @man.source_mac_address,
-          source_mac: mac,
-          sender_protocol_address: @man.dest_ip_address,
-          target_protocol_address: @man.source_ip_address
-        ).to_binary,
-        actions: SendOutPort.new(@man.in_port)
-      )
-
+      packet_in_arp_request dpid, packet_in.in_port, packet_in.data
     when Arp::Reply
       packet_in_arp_reply dpid, packet_in
     when Parser::IPv4Packet
       packet_in_ipv4 dpid, packet_in
-      #mac = @man.get_source_mac
-      #ip  = @man.get_source_ip
-      #@permit_table.add(mac, ip)
-      #@permit_table.dump
     else
       logger.debug "Dropping unsupported packet type: #{packet_in.data.inspect}"
     end
   end
   # rubocop:enable MethodLength
 
-
-
-
-
-
-
   # rubocop:disable MethodLength
   def packet_in_arp_request(dpid, in_port, arp_request)
     interface =
       Interface.find_by(port_number: in_port,
                         ip_address: arp_request.target_protocol_address)
-    unless interface
-      puts "  arp delete"
-      return
-    end
-
+    return unless interface
     send_packet_out(
       dpid,
       raw_data: Arp::Reply.new(
@@ -105,8 +68,6 @@ class SimpleRouter < Trema::Controller
       actions: SendOutPort.new(in_port))
   end
   # rubocop:enable MethodLength
-
-
 
   def packet_in_arp_reply(dpid, packet_in)
     @arp_table.update(packet_in.in_port,
@@ -143,6 +104,13 @@ class SimpleRouter < Trema::Controller
     end
   end
   # rubocop:enable MethodLength
+
+
+
+
+  def dump_table
+    @network.dump
+  end
 
 
 
