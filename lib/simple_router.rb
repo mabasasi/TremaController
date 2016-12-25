@@ -1,7 +1,6 @@
 require 'arp_table'
 require 'interface'
 require 'routing_table'
-require 'permit_table'
 require 'packet_wrapper'
 require 'network_table'
 
